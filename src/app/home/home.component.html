@@ -1,0 +1,17 @@
+<main>
+    <p>Hello {{manager()?.name}}!</p>
+    <div>
+    <button (click)="handleSubmit()">submit</button>
+    <mat-form-field>
+        <mat-label>Select job site</mat-label>
+        <mat-select (valueChange)="onInput($event)">
+            @for (jobSite of this.manager()?.jobSites; track $index) {
+            <mat-option value={{jobSite.id}}>{{jobSite.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    </div>
+
+    <app-table></app-table>
+
+</main>
