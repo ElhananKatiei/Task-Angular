@@ -9,6 +9,7 @@ import { TableComponent } from '../components/table/table.component';
 import { JobSite, NewOrder, Order, Product, ProductAmount, TableInformetion } from '../model/entityes.type';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
+import { BACK_END_URL } from '../../../environment';
 
 
 @Component( {
@@ -21,38 +22,11 @@ import { catchError } from 'rxjs';
 export class HomeComponent 
 {
   http = inject( HttpClient );
-  // productsService = inject( ProductsService );
   loginService = inject( LoginService );
   manager = signal( this.loginService.Manager );
   TotalPrice = signal( 0 );
   jobSiteId = signal<number>( 0 );
   productsAmount = signal<TableInformetion[]>( [] );
-  // products = signal<Product[]>( [] );
-
-  // products = signal<Product[]>( inject(ProductsService ).getProducts() );
-
-  // constructor()
-  // {
-  //   this.products = signal<Product[]>( inject( ProductsService ).getProducts() );
-  // }
-
-  // ngOnInit(): void
-  // {
-  //   this.productsService.getProducts().pipe(
-  //     catchError( ( err ) =>
-  //     {
-  //       console.log( err );
-  //       throw err;
-  //     } )
-  //   ).subscribe( ( r ) =>
-  //   {
-  //     this.products.set( r ); console.log(
-  //       r
-  //     )
-  //   } );
-  //   console.log( this.products() );
-  // }
-
 
   protected onInput( event: number )
   {
@@ -62,10 +36,11 @@ export class HomeComponent
   handleSubmit()
   {
     if ( this.checkFildes() ) {
+      const url = BACK_END_URL + '/Order';
       let newOrder: Order = {} as Order;
       newOrder = this.preperNewOrder( newOrder );
       console.log( 'this is the new order : ', newOrder );
-      this.http.post( 'http://localhost:5124/Order', { IdManager: this.manager()?.id, Order: newOrder } as NewOrder )
+      this.http.post( url, { IdManager: this.manager()?.id, Order: newOrder } as NewOrder )
         .subscribe( ( r ) =>
         {
           console.log( "this is the result!!", r )
@@ -77,7 +52,6 @@ export class HomeComponent
 
   reset()
   {
-    // for (let item of this.productsAmount)
     this.TotalPrice.set( 0 );
     this.productsAmount().forEach( ( p ) => { if ( p.amount > 0 ) p.amount = 0 } )
   }

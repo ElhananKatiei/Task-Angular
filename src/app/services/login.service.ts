@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { LoginArguments, Manager } from '../model/entityes.type';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
+import { BACK_END_URL } from '../../../environment';
 
 type ActiveManager = Manager | undefined;
 
@@ -14,7 +15,7 @@ export class LoginService {
 
   login( loginArguments:LoginArguments )
   {
-    const url = 'http://localhost:5124/Login';
+    const url = BACK_END_URL +'/Login';
     return this.http.post( url, loginArguments );
   }
 }

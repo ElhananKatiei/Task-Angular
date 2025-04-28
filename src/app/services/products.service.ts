@@ -2,6 +2,7 @@ import { inject, Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../model/entityes.type';
 import { catchError } from 'rxjs';
+import { BACK_END_URL } from '../../../environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ProductsService {
 
   getProducts()
   {
-    const url = 'http://localhost:5124/Product';
+    const url = BACK_END_URL+'/Product';
     // this.http.get( url ).pipe( catchError( ( err ) =>
     // {
     //   console.log( err );
